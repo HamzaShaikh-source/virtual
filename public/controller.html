@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0d0f18">
+  <title>Flappy Royale - Controller</title>
+  <link rel="stylesheet" href="style-controller.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="controller.js" defer></script>
+</head>
+<body>
+  <!-- Connection banner -->
+  <div id="connection-banner" class="connection-banner hidden">
+    <span class="pulse-dot"></span> Reconnecting to game...
+  </div>
+
+  <!-- Screen 1: Join / Name Entry Screen -->
+  <main id="join-screen" class="screen active">
+    <div class="join-card">
+      <div class="logo-container">
+        <div class="bird-badge">🐦</div>
+        <h1 class="game-title">FLAPPY ROYALE</h1>
+        <p class="game-subtitle">Mobile Controller</p>
+      </div>
+
+      <form id="join-form" class="join-form">
+        <label for="player-name-input" class="input-label">YOUR NICKNAME</label>
+        <div class="input-wrap">
+          <input
+            type="text"
+            id="player-name-input"
+            class="name-input"
+            placeholder="Enter nickname"
+            maxlength="15"
+            required
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="words"
+            spellcheck="false"
+          />
+        </div>
+        <button type="submit" id="join-button" class="btn-join">
+          <span>JOIN BATTLE</span>
+        </button>
+      </form>
+
+      <div class="instruction-box">
+        <p class="instruction-text">Tap anywhere to flap once the round starts</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Screen 2: Game Controller Screen -->
+  <main id="controller-screen" class="screen hidden">
+    <!-- Header: Player name, assigned color avatar, round status -->
+    <header class="controller-header">
+      <div class="player-info">
+        <span id="player-avatar" class="player-avatar"></span>
+        <div class="player-meta">
+          <span id="player-name-display" class="player-name">Player</span>
+          <span id="player-role-badge" class="role-badge">CONTROLLER</span>
+        </div>
+      </div>
+      <div id="game-status-badge" class="status-badge status-lobby">LOBBY</div>
+    </header>
+
+    <!-- Host Control Panel (Visible for host only) -->
+    <div id="host-panel" class="host-panel hidden">
+      <button id="start-round-btn" class="btn-host-action hidden">START ROUND</button>
+      <button id="restart-round-btn" class="btn-host-action hidden">RESTART MATCH</button>
+    </div>
+
+    <!-- Full-Screen Tap-to-Flap Button Container -->
+    <div class="flap-container">
+      <button id="flap-button" class="flap-button" type="button" aria-label="Tap to Flap">
+        <div class="flap-inner">
+          <div class="flap-icon-ring">
+            <span class="flap-icon">🕊️</span>
+          </div>
+          <span class="flap-label">TAP TO FLAP</span>
+          <span class="flap-hint">Watch the shared screen</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Overlay: Eliminated -->
+    <div id="eliminated-overlay" class="state-overlay overlay-eliminated hidden">
+      <div class="overlay-modal">
+        <div class="overlay-icon">💥</div>
+        <h2 class="overlay-heading">ELIMINATED</h2>
+        <p id="eliminated-desc" class="overlay-text">Your bird hit an obstacle!</p>
+        <div class="spectate-indicator">
+          <span class="spectate-dot"></span> Spectating on Big Screen
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay: You Won -->
+    <div id="winner-overlay" class="state-overlay overlay-winner hidden">
+      <div class="overlay-modal">
+        <div class="overlay-icon">👑</div>
+        <h2 class="overlay-heading">YOU WON!</h2>
+        <p class="overlay-text">Last bird flying in the arena!</p>
+        <div class="winner-trophy">🏆 CHAMPION 🏆</div>
+      </div>
+    </div>
+
+    <!-- Overlay: Round Ended (Another player won) -->
+    <div id="game-over-overlay" class="state-overlay overlay-ended hidden">
+      <div class="overlay-modal">
+        <div class="overlay-icon">🏁</div>
+        <h2 class="overlay-heading">ROUND OVER</h2>
+        <p id="game-over-desc" class="overlay-text">Waiting for host to restart...</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
