@@ -3,8 +3,3 @@ node_modules/
 __pycache__/
 *.pyc
 .venv/
-
-# Ensure test suite is tracked
-!tests/
-!tests/**
-!*.test.js
