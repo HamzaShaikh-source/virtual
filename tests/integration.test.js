@@ -116,4 +116,30 @@ describe('Integration smoke test (server + sockets)', () => {
       'state.winnerId must be string or null'
     );
   });
+
+  test('handles flap and restart socket events according to contract', async () => {
+    assert.ok(clientSocket.connected, 'Client socket should still be connected');
+
+    // Emit flap
+    clientSocket.emit('flap');
+
+    // Emit restart
+    clientSocket.emit('restart');
+
+    const lobbyState = await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('Waiting for lobby state timed out')), 4000);
+      const onState = (s) => {
+        if (s && s.status === 'lobby') {
+          clearTimeout(timer);
+          clientSocket.off('state', onState);
+          resolve(s);
+        }
+      };
+      clientSocket.on('state', onState);
+    });
+
+    assert.strictEqual(lobbyState.status, 'lobby', 'Restart must set room status to lobby');
+    assert.deepStrictEqual(lobbyState.eliminated, [], 'Restart must reset eliminated array');
+  });
 });
+
