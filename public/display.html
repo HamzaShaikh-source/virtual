@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flappy Royale - Big Screen Arena</title>
+  <link rel="stylesheet" href="style-display.css">
+</head>
+<body>
+  <header>
+    <div class="logo-group">
+      <h1>Flappy Royale</h1>
+    </div>
+    <div class="header-meta">
+      <span id="player-count" class="player-count-text">0 Players</span>
+      <span id="status-badge" class="badge badge-lobby">LOBBY</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="arena-section">
+      <div class="canvas-wrapper">
+        <canvas id="game-canvas" width="800" height="600"></canvas>
+        <div id="winner-overlay" class="overlay hidden">
+          <div class="winner-modal">
+            <h1>WINNER!</h1>
+            <div id="winner-name" class="winner-name-badge">Player 1</div>
+            <p class="winner-sub">Last bird flying!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="card" id="join-card">
+        <h2>Scan to Join</h2>
+        <div class="qr-card-body">
+          <div class="qr-box">
+            <img id="qr-image" alt="QR Code to Join" src="">
+          </div>
+          <a id="join-url" href="#" target="_blank" class="qr-url-link">Loading join URL...</a>
+          <p class="qr-hint">Scan with mobile camera to flap</p>
+        </div>
+      </div>
+
+      <div class="card" id="controls-card">
+        <h2>Host Controls</h2>
+        <div class="host-buttons">
+          <button id="btn-start" class="btn btn-primary">Start Round</button>
+          <button id="btn-restart" class="btn btn-secondary">Restart</button>
+          <button id="btn-flap" class="btn btn-accent">Flap</button>
+        </div>
+        <p class="controls-hint">Space: Flap | Enter: Start | R: Restart</p>
+      </div>
+
+      <div class="card" id="players-card">
+        <h2>Players</h2>
+        <ul id="players-list" class="player-list">
+          <li class="empty-state-text">Waiting for players to join...</li>
+        </ul>
+      </div>
+
+      <div class="card" id="elimination-card">
+        <h2>Elimination Order</h2>
+        <ol id="elimination-list" class="elimination-list">
+          <li class="empty-state-text">No eliminations yet</li>
+        </ol>
+      </div>
+    </aside>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="host-controls.js"></script>
+  <script src="display.js"></script>
+</body>
+</html>
