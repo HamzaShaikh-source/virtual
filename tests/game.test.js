@@ -9,6 +9,19 @@ describe('GameRoom Unit Tests', () => {
     room = new GameRoom({ seed: 42 });
   });
 
+  describe('Scenario 0: Contract Exports & Constants', () => {
+    it('exports MAX_PLAYERS as 8 and COLORS as array of 8 distinct hex strings', () => {
+      assert.equal(GameRoom.MAX_PLAYERS, 8);
+      assert.ok(Array.isArray(GameRoom.COLORS));
+      assert.equal(GameRoom.COLORS.length, 8);
+      const uniqueColors = new Set(GameRoom.COLORS);
+      assert.equal(uniqueColors.size, 8, 'COLORS must contain 8 distinct colors');
+      for (const color of GameRoom.COLORS) {
+        assert.match(color, /^#[0-9A-Fa-f]{6}$/, `${color} should be a valid hex color string`);
+      }
+    });
+  });
+
   describe('Scenario 1: Player Management (addPlayer & removePlayer)', () => {
     it('assigns host status to the first player and non-host to subsequent players', () => {
       const p1 = room.addPlayer('socket-1', 'Alice');
